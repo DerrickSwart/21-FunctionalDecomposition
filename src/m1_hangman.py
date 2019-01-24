@@ -43,7 +43,6 @@ def incorrect_guess(max):
 
 def print_correct_letters(secret, max):
     sequence = []
-    n = 0
     for k in range(len(secret)):
         sequence = sequence + ['-']
     while True:
@@ -53,7 +52,6 @@ def print_correct_letters(secret, max):
                 sequence[j] = secret[j]
         string = construct_string(sequence)
         print(string)
-        print (n)
         if string == secret:
             break
 def construct_string(sequence):
@@ -61,8 +59,6 @@ def construct_string(sequence):
     for k in range(len(sequence)):
         string = string + sequence[k]
     return string
-def lose():
-
 def main():
     secret = get_word()
     max = [int(input('please enter how many incorrect guesses you would like to have')),0]
