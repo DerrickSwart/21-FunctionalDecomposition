@@ -1,10 +1,10 @@
 """
 Hangman.
 
-Authors: Derrick Swart and Joshua Giambattista 
+Authors: Derrick Swart, Joshua Giambattista , Joseph Conrad
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Implement Hangman using your Iterative Enhancement Plan.
+# DONE: 2. Implement Hangman using your Iterative Enhancement Plan.
 
 ####### Do NOT attempt this assignment before class! #######
 
@@ -16,11 +16,19 @@ with open('words.txt') as words:
 
 
 
-
-def get_word():
+def lose(secret_word):
+    print('Im sorry, you lose. The secret word was:  ', secret_word)
+    x = str(input('would you like to play again? y/n:   '))
+    if x == 'y':
+        main()
+    if x == 'n':
+        print('Thanks for playing Hangman!')
+        exit()
+def get_word(word_length):
     r = random.randrange(0,len(word))
+    if len(word[r])< word_length:
+        get_word(word_length)
     secret_word = word[r]
-    print(secret_word)
     return secret_word
 
 def get_guess():
@@ -34,11 +42,11 @@ def check_if_correct(secret,max):
             return guess
     max[0] = max[0] -1
     left = incorrect_guess(max)
+
     if left == 0:
-        lose()
+        lose(secret)
 
 def incorrect_guess(max):
-    print('you have', max[0], 'left')
     return max[0]
 
 def print_correct_letters(secret, max):
@@ -51,17 +59,28 @@ def print_correct_letters(secret, max):
             if guess == secret[j]:
                 sequence[j] = secret[j]
         string = construct_string(sequence)
+        print('you have', max[0], 'incorrect guesses remaining')
         print(string)
         if string == secret:
             break
+    win()
 def construct_string(sequence):
     string = ''
     for k in range(len(sequence)):
         string = string + sequence[k]
     return string
+def win():
+    print('Conradulations, you Win')
+    x = input('Would you like to play again? y/n:  ')
+    if x == 'y':
+        main()
+    if x == 'n':
+        print('Thank you for playing Hangman!')
+        exit()
 def main():
-    secret = get_word()
-    max = [int(input('please enter how many incorrect guesses you would like to have')),0]
+    word_length = int(input('What would you like the minimum length of the word to be:   '))
+    secret = get_word(word_length)
+    max = [int(input('please enter how many incorrect guesses you would like to have:   ')),0]
     print_correct_letters(secret,max)
 
 
